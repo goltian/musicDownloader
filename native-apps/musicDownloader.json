@@ -1,0 +1,11 @@
+{
+  // Don't forget to create NativeMessagingHosts (regedit in cmd)
+  "name": "com.music.musicdownloader",
+  "description": "Download music",
+  "path": "musicDownloader.bat",
+  "type": "stdio",
+  // It's the name of your extension. Don't forget to rename it
+  "allowed_origins": [
+    "chrome-extension://jngiaehnfnnlbjhffajidhehbgghnpdh/"
+  ]
+}
