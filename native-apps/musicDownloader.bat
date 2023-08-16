@@ -1,2 +1,2 @@
-cd C:\Users\Stepan\Downloads\musicDownloader
+cd ..
 start downloadMusic.py

@@ -3,36 +3,36 @@ import os
 import time
 
 ydl_opts = {
-    'format': 'bestaudio/best',
+    'format' : 'bestaudio/best',
 
     # For download forbidden music. Need Tor browser
-    #'proxy': "socks5://127.0.0.1:9150/",
+    #'proxy' : 'socks5://127.0.0.1:9150/',
 
     # Path and name for a song
-    'outtmpl': os.path.join("downloadedMusic", '%(channel)s - %(title)s.%(ext)s'),
+    'outtmpl' : os.path.join('downloadedMusic', '%(channel)s - %(title)s.%(ext)s'),
 
     # Webm to Mp3 convert
-    'postprocessors': [{
-        'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'mp3',
-        'preferredquality': '192',
+    'postprocessors' : [{
+        'key' : 'FFmpegExtractAudio',
+        'preferredcodec' : 'mp3',
+        'preferredquality' : '192',
     }],
 
-    "noplaylist" : True,
+    'noplaylist' : True,
 }
 
 # Open url file
-f = open('urlForDownload.txt','r')
+f = open('urlForDownload.txt', 'r')
 video_url = f.readline()
 f.close()
 
 # The url needed to be youtube url
-if "https://www.youtube.com/watch" in video_url:
+if 'https://www.youtube.com/watch' in video_url:
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         try:
             ydl.download([video_url])
         except Exception as ex:
-            file_name = "forbiddenUrls.txt"
+            file_name = 'forbiddenUrls.tx'
             f = open(file_name, 'a')
             f.write(str(video_url))
             f.write('\n')

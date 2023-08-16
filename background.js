@@ -3,12 +3,13 @@ chrome.action.onClicked.addListener(function (tab) {
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
         let url = tabs[0].url;
 
-        var dataURI = "data:text/plain;charset=utf-8," + encodeURIComponent(url);
+        var dataURI = 'data:text/plain;charset=utf-8,' + encodeURIComponent(url);
         chrome.downloads.download({
             url: dataURI,
-            filename: "musicDownloader/urlForDownload.txt",
+            // It will work only if musicDownloader is in the "download" dir
+            filename: 'musicDownloader/urlForDownload.txt',
             saveAs: false,
-            conflictAction: "overwrite",
+            conflictAction: 'overwrite',
         });
     });
 
