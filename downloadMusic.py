@@ -62,28 +62,34 @@ def normaliseLoudness(song):
         dbToReduce += 1
     return (dbToReduce - 1)
 
-with open('outputInfo.txt', 'w') as f: 
-    with redirect_stdout(f): 
-        isDownloadComplete = downloadMusic()
-
-if isDownloadComplete:
-    file_name = 'outputInfo.txt'
-    f = open(file_name, 'r')
-    while True:
-        pathToTheSong = f.readline()
-        if "[download]" in pathToTheSong:
-            break
-    pathToTheSong = pathToTheSong[24:]
-    pathToTheSong = pathToTheSong[:-5] + "mp3"
-    f.close()
-
-    song = AudioSegment.from_mp3(pathToTheSong)
-    dbRoReduce = normaliseLoudness(song)
-    song -= dbRoReduce
-    song.export(pathToTheSong, "mp3")
-
+def main():
+    with open('outputInfo.txt', 'w', encoding='utf-8') as f: 
+        with redirect_stdout(f): 
+            isDownloadComplete = downloadMusic()
     print("Your song was downloaded successfuly")
-    time.sleep(1)
-else:
-    print("Error. Your song was not downloaded")
-    time.sleep(3)
+
+    if isDownloadComplete:
+        file_name = 'outputInfo.txt'
+        f = open(file_name, 'r', encoding='utf-8')
+        while True:
+            pathToTheSong = f.readline()
+            if "[download]" in pathToTheSong:
+                break
+        pathToTheSong = pathToTheSong[24:]
+        pathToTheSong = pathToTheSong[:-5] + "mp3"
+        f.close()
+
+        song = AudioSegment.from_mp3(pathToTheSong)
+        dbRoReduce = normaliseLoudness(song)
+
+        if dbRoReduce > 0:
+            song -= dbRoReduce
+            song.export(pathToTheSong, "mp3")
+
+        print("Loudness is normal now")
+        time.sleep(1)
+    else:
+        print("Error. Your song was not downloaded")
+        time.sleep(3)
+
+main()
