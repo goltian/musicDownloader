@@ -1,13 +1,15 @@
 import yt_dlp
 import os
-import time
 from contextlib import redirect_stdout 
 from pydub import AudioSegment
+import matplotlib.pyplot as plt
 
-class bcolors:
-    OKGREEN = '\033[92m'
-    FAIL = '\033[91m'
-os.system('color')
+
+fig = plt.figure()
+ax = fig.add_subplot()
+fig.subplots_adjust(top=0.85)
+ax.axis([0, 10, 0, 10])
+ax.axis('off')
 
 def getUrl():
     f = open('urlForDownload.txt', 'r')
@@ -66,7 +68,6 @@ def main():
             isDownloadComplete = downloadMusic()
 
     if isDownloadComplete:
-        print(f"{bcolors.OKGREEN}Your song was downloaded successfuly")
         file_name = 'outputInfo.txt'
         f = open(file_name, 'r', encoding='utf-8')
         while True:
@@ -83,13 +84,11 @@ def main():
             if dbRoReduce > 0:
                 song -= dbRoReduce
                 song.export(pathToTheSong, "mp3")
-            print(f"{bcolors.OKGREEN}Loudness is normal now")
-            time.sleep(1)
         except Exception as ex:
-            print(f"{bcolors.FAIL}Error: Problem with loudness")
-            time.sleep(3)
+            ax.text(0, 5, r'Error: Problem with loudness', fontsize=24, color="red")
+            plt.show()
     else:
-        print(f"{bcolors.FAIL}Error: Your song was not downloaded")
-        time.sleep(3)
+        ax.text(0, 5, r'Error: Your song was not downloaded', fontsize=18, color="red")
+        plt.show()
 
 main()
