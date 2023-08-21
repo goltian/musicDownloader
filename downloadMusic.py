@@ -16,14 +16,14 @@ def printError(errorMessage):
 
 def getUrl():
     f = open('urlForDownload.txt', 'r')
-    video_url = f.readline()
+    videoUrl = f.readline()
     f.close()
-    return video_url
+    return videoUrl
 
 def downloadMusic():
     isDownloadComplete = False
 
-    ydl_opts = {
+    ydlOpts = {
     'format' : 'bestaudio/best',
     # For download forbidden music. Need Tor browser
     #'proxy' : 'socks5://127.0.0.1:9150/',
@@ -38,11 +38,11 @@ def downloadMusic():
     'noplaylist' : True,
     }
 
-    video_url = getUrl()
+    videoUrl = getUrl()
     pathToTheSong = ""
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+    with yt_dlp.YoutubeDL(ydlOpts) as ydl:
         try:
-            info = ydl.extract_info(video_url)
+            info = ydl.extract_info(videoUrl)
             pathToTheSong = ydl.prepare_filename(info)
             pathToTheSong = pathToTheSong.replace(".webm", ".mp3")
             isDownloadComplete = True
