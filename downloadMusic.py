@@ -2,7 +2,6 @@ import win32gui, win32con
 win32gui.ShowWindow(win32gui.GetForegroundWindow() , win32con.SW_HIDE)
 
 import yt_dlp
-import os
 from pydub import AudioSegment
 
 import matplotlib.pyplot as plt
@@ -28,7 +27,7 @@ def downloadMusic():
     # For download forbidden music. Need Tor browser
     #'proxy' : 'socks5://127.0.0.1:9150/',
     # Path and name for a song
-    'outtmpl' : os.path.join('downloadedMusic', '%(channel)s - %(title)s.%(ext)s'),
+    'outtmpl' : ('downloadedMusic\\' + '%(channel)s - %(title)s.%(ext)s'),
     # Webm to Mp3 convert
     'postprocessors' : [{
         'key' : 'FFmpegExtractAudio',
