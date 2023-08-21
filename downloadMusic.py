@@ -43,12 +43,9 @@ def downloadMusic():
             pathToTheSong = ydl.prepare_filename(info)
             pathToTheSong = pathToTheSong.replace(".webm", ".mp3")
             isDownloadComplete = True
-        except Exception as ex:
-            file_name = 'forbiddenUrls.txt'
-            f = open(file_name, 'a')
-            f.write(str(video_url))
-            f.write('\n')
-            f.close()
+        except Exception:
+            ax.text(0.05, 5, r'Error: Problem with download', fontsize=24, color="red")
+            plt.show()
 
     return isDownloadComplete, pathToTheSong
 
@@ -74,11 +71,8 @@ def main():
             if dbRoReduce > 0:
                 song -= dbRoReduce
                 song.export(pathToTheSong, "mp3")
-        except Exception as ex:
+        except Exception:
             ax.text(0.2, 5, r'Error: Problem with loudness', fontsize=24, color="red")
             plt.show()
-    else:
-        ax.text(0.05, 5, r'Error: Problem with download', fontsize=24, color="red")
-        plt.show()
 
 main()
