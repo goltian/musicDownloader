@@ -1,9 +1,11 @@
+import win32gui, win32con
+win32gui.ShowWindow(win32gui.GetForegroundWindow() , win32con.SW_HIDE)
+
 import yt_dlp
 import os
 from contextlib import redirect_stdout 
 from pydub import AudioSegment
 import matplotlib.pyplot as plt
-
 
 fig = plt.figure()
 ax = fig.add_subplot()
