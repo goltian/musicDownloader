@@ -1,16 +1,15 @@
 import win32gui, win32con
 win32gui.ShowWindow(win32gui.GetForegroundWindow() , win32con.SW_HIDE)
-
 import yt_dlp
 from pydub import AudioSegment
-
 import matplotlib.pyplot as plt
+
 def printError(errorMessage):
     fig = plt.figure()
     ax = fig.add_subplot()
     ax.axis([0, 10, 0, 10])
     ax.axis('off')
-    ax.text(0, 5, errorMessage, fontsize=24, color="red")
+    ax.text(0, 5, errorMessage, fontsize=24, color='red')
     plt.show()
 
 def getUrl():
@@ -20,8 +19,6 @@ def getUrl():
     return videoUrl
 
 def downloadMusic():
-    isDownloadComplete = False
-
     ydlOpts = {
     'format' : 'bestaudio/best',
     # For download forbidden music. Need Tor browser
@@ -37,20 +34,20 @@ def downloadMusic():
     'noplaylist' : True,
     }
 
-    videoUrl = getUrl()
-    pathToTheSong = ""
+    isDownloadComplete = False
+    pathToTheSong = ''
     with yt_dlp.YoutubeDL(ydlOpts) as ydl:
         try:
+            videoUrl = getUrl()
             info = ydl.extract_info(videoUrl)
             pathToTheSong = ydl.prepare_filename(info)
-            pathToTheSong = pathToTheSong.replace(".webm", ".mp3")
+            pathToTheSong = pathToTheSong.replace('.webm', '.mp3')
             isDownloadComplete = True
         except Exception:
             printError("Error: Problem with download")
-
     return isDownloadComplete, pathToTheSong
 
-def normaliseLoudness(song):
+def computeDbToReduce(song):
     CONST_DB_REDUCE_MULTIPLIER = 0.891229
     rms = song.rms
     if rms <= 5000:
@@ -64,14 +61,13 @@ def normaliseLoudness(song):
 
 def main():
     isDownloadComplete, pathToTheSong = downloadMusic()
-
     if isDownloadComplete:
         try:
             song = AudioSegment.from_mp3(pathToTheSong)
-            dbRoReduce = normaliseLoudness(song)
+            dbRoReduce = computeDbToReduce(song)
             if dbRoReduce > 0:
                 song -= dbRoReduce
-                song.export(pathToTheSong, "mp3")
+                song.export(pathToTheSong, 'mp3')
         except Exception:
             printError("Error: Problem with loudness")
 
