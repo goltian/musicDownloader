@@ -87,10 +87,10 @@ def main():
                 song -= dbRoReduce
                 song.export(pathToTheSong, "mp3")
         except Exception as ex:
-            ax.text(0, 5, r'Error: Problem with loudness', fontsize=24, color="red")
+            ax.text(0.2, 5, r'Error: Problem with loudness', fontsize=24, color="red")
             plt.show()
     else:
-        ax.text(0, 5, r'Error: Your song was not downloaded', fontsize=18, color="red")
+        ax.text(0.05, 5, r'Error: Problem with download', fontsize=24, color="red")
         plt.show()
-
+    
 main()
