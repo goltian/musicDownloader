@@ -1,6 +1,7 @@
 """
-Download music by URL from youtube
+Download music by URL from youtube.
 """
+
 import yt_dlp
 
 def getUrl():
@@ -12,12 +13,13 @@ def getUrl():
 def downloadMusic():
     """
     Download music on PC.
-    Return its path or empty string in case of error.
+    Return its path.
     """
+
     ydlOpts = {
     'format' : 'bestaudio/best',
     # For download forbidden music. Need Tor browser
-    #'proxy' : 'socks5://127.0.0.1:9150/',
+    # 'proxy' : 'socks5://127.0.0.1:9150/',
     # Path and name for a song
     'outtmpl' : ('downloadedMusic\\' + '%(channel)s - %(title)s.%(ext)s'),
     # Webm to Mp3 convert

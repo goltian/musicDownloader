@@ -17,12 +17,11 @@ try:
         return (dbToReduce - 1)
 
     pathToTheSong = download.downloadMusic()
-    if pathToTheSong:
-        song = AudioSegment.from_mp3(pathToTheSong)
-        dbRoReduce = computeDbToReduce(song)
-        if dbRoReduce > 0:
-            song -= dbRoReduce
-            song.export(pathToTheSong, 'mp3')
+    song = AudioSegment.from_mp3(pathToTheSong)
+    dbRoReduce = computeDbToReduce(song)
+    if dbRoReduce > 0:
+        song -= dbRoReduce
+        song.export(pathToTheSong, 'mp3')
 
 except Exception as ex:
     win32gui.ShowWindow(win32gui.GetForegroundWindow() , win32con.SW_SHOW)
