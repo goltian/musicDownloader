@@ -3,15 +3,6 @@ try:
     win32gui.ShowWindow(win32gui.GetForegroundWindow() , win32con.SW_HIDE)
     import yt_dlp
     from pydub import AudioSegment
-    import matplotlib.pyplot as plt
-    
-    def printError(errorMessage):
-        fig = plt.figure()
-        ax = fig.add_subplot()
-        ax.axis([0, 10, 0, 10])
-        ax.axis('off')
-        ax.text(0, 5, errorMessage, fontsize=24, color='red')
-        plt.show()
 
     def getUrl():
         f = open('urlForDownload.txt', 'r')
@@ -38,14 +29,11 @@ try:
         isDownloadComplete = False
         pathToTheSong = ''
         with yt_dlp.YoutubeDL(ydlOpts) as ydl:
-            try:
-                videoUrl = getUrl()
-                info = ydl.extract_info(videoUrl)
-                pathToTheSong = ydl.prepare_filename(info)
-                pathToTheSong = pathToTheSong.replace('.webm', '.mp3')
-                isDownloadComplete = True
-            except Exception:
-                printError("Error: Problem with download")
+            videoUrl = getUrl()
+            info = ydl.extract_info(videoUrl)
+            pathToTheSong = ydl.prepare_filename(info)
+            pathToTheSong = pathToTheSong.replace('.webm', '.mp3')
+            isDownloadComplete = True
         return isDownloadComplete, pathToTheSong
 
     def computeDbToReduce(song):
@@ -63,17 +51,14 @@ try:
     def main():
         isDownloadComplete, pathToTheSong = downloadMusic()
         if isDownloadComplete:
-            try:
-                song = AudioSegment.from_mp3(pathToTheSong)
-                dbRoReduce = computeDbToReduce(song)
-                if dbRoReduce > 0:
-                    song -= dbRoReduce
-                    song.export(pathToTheSong, 'mp3')
-            except Exception:
-                printError("Error: Problem with loudness")
+            song = AudioSegment.from_mp3(pathToTheSong)
+            dbRoReduce = computeDbToReduce(song)
+            if dbRoReduce > 0:
+                song -= dbRoReduce
+                song.export(pathToTheSong, 'mp3')
 
     main()
 except Exception as ex:
     win32gui.ShowWindow(win32gui.GetForegroundWindow() , win32con.SW_SHOW)
     print("Error: ", ex)
-    input("Press enter to exit")
+    input("Press enter to exit...")
