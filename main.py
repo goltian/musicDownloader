@@ -16,8 +16,8 @@ try:
             dbToReduce += 1
         return (dbToReduce - 1)
 
-    isDownloadComplete, pathToTheSong = download.downloadMusic()
-    if isDownloadComplete:
+    pathToTheSong = download.downloadMusic()
+    if pathToTheSong:
         song = AudioSegment.from_mp3(pathToTheSong)
         dbRoReduce = computeDbToReduce(song)
         if dbRoReduce > 0:

@@ -1,3 +1,6 @@
+"""
+Download music by URL from youtube
+"""
 import yt_dlp
 
 def getUrl():
@@ -7,6 +10,10 @@ def getUrl():
     return videoUrl
 
 def downloadMusic():
+    """
+    Download music on PC.
+    Return its path or empty string in case of error.
+    """
     ydlOpts = {
     'format' : 'bestaudio/best',
     # For download forbidden music. Need Tor browser
@@ -22,12 +29,10 @@ def downloadMusic():
     'noplaylist' : True,
     }
 
-    isDownloadComplete = False
     pathToTheSong = ''
     with yt_dlp.YoutubeDL(ydlOpts) as ydl:
         videoUrl = getUrl()
         info = ydl.extract_info(videoUrl)
         pathToTheSong = ydl.prepare_filename(info)
         pathToTheSong = pathToTheSong.replace('.webm', '.mp3')
-        isDownloadComplete = True
-    return isDownloadComplete, pathToTheSong
+    return pathToTheSong
