@@ -1,2 +1,2 @@
 cd ..
-start downloadMusic.py
+start main.py
