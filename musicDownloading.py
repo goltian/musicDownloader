@@ -1,5 +1,5 @@
 """
-Download music by URL from youtube.
+Downloads a song by URL from youtube.
 """
 
 import yt_dlp
@@ -12,8 +12,8 @@ def getUrl():
 
 def downloadMusic():
     """
-    Download music on PC.
-    Return its path.
+    Downloads music on PC.
+    Returns its path or None in case of error.
     """
 
     ydlOpts = {
@@ -31,10 +31,9 @@ def downloadMusic():
     'noplaylist' : True,
     }
 
-    pathToTheSong = ''
     with yt_dlp.YoutubeDL(ydlOpts) as ydl:
         videoUrl = getUrl()
         info = ydl.extract_info(videoUrl)
         pathToTheSong = ydl.prepare_filename(info)
         pathToTheSong = pathToTheSong.replace('.webm', '.mp3')
-    return pathToTheSong
+        return pathToTheSong
