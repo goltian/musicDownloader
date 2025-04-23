@@ -10,7 +10,7 @@ def getUrl():
     f.close()
     return videoUrl
 
-def downloadMusic():
+def downloadMusic(random_index):
     """
     Downloads music on PC.
     Returns its path or None in case of error.
@@ -21,7 +21,7 @@ def downloadMusic():
     # For download forbidden music. Need Tor browser
     # 'proxy' : 'socks5://127.0.0.1:9150/',
     # Path and name for a song
-    'outtmpl' : ('downloadedMusic\\' + '%(channel)s - %(title)s.%(ext)s'),
+    'outtmpl' : ('downloadedMusic\\' + random_index + ' %(channel)s - %(title)s.%(ext)s'),
     # Webm to Mp3 convert
     'postprocessors' : [{
         'key' : 'FFmpegExtractAudio',
@@ -35,5 +35,7 @@ def downloadMusic():
         videoUrl = getUrl()
         info = ydl.extract_info(videoUrl)
         pathToTheSong = ydl.prepare_filename(info)
-        pathToTheSong = pathToTheSong.replace('.webm', '.mp3')
+        dot_id = pathToTheSong.find('.')
+        pathToTheSong = pathToTheSong[:dot_id]
+        pathToTheSong = pathToTheSong + '.mp3'
         return pathToTheSong
