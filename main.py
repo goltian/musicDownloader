@@ -1,5 +1,7 @@
 import win32gui, win32con
-win32gui.ShowWindow(win32gui.GetForegroundWindow() , win32con.SW_HIDE)
+import ctypes
+hwnd = ctypes.windll.kernel32.GetConsoleWindow()
+win32gui.ShowWindow(hwnd, win32con.SW_HIDE)
 import musicDownloading
 import volumeReducing
 import random
@@ -17,7 +19,7 @@ for attempt in range(tries):
             print("Attemt № ", attempt, " failed")
             continue
         else:
-            win32gui.ShowWindow(win32gui.GetForegroundWindow() , win32con.SW_SHOW)
+            win32gui.ShowWindow(hwnd, win32con.SW_SHOW)
             print("Error: ", ex)
             input("Press enter to exit...")
     break

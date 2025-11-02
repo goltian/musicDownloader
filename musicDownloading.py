@@ -19,7 +19,7 @@ def downloadMusic(random_index):
     ydlOpts = {
     'format' : 'bestaudio/best',
     # For download forbidden music. Need Tor browser
-    # 'proxy' : 'socks5://127.0.0.1:9150/',
+    #'proxy' : 'socks5://127.0.0.1:9150/',
     # Path and name for a song
     'outtmpl' : ('downloadedMusic\\' + random_index + ' %(channel)s - %(title)s.%(ext)s'),
     # Webm to Mp3 convert
